@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hadrian's Wall: Construction & Legacy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #ecf0f1;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: none;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #e74c3c;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            color: #e67e22;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin: 20px 0;
+            color: #f39c12;
+        }
+
+        p, li {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .latin-quote {
+            background: rgba(231, 76, 60, 0.2);
+            border-left: 5px solid #e74c3c;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 5px;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .latin-text {
+            font-style: italic;
+            font-size: 1.3em;
+            color: #f1c40f;
+            margin-bottom: 10px;
+        }
+
+        .translation {
+            color: #ecf0f1;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .source {
+            color: #95a5a6;
+            font-size: 0.9em;
+            text-align: right;
+        }
+
+        .guiding-questions {
+            background: rgba(52, 152, 219, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 5px solid #3498db;
+        }
+
+        .guiding-questions h4 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .guiding-questions ul {
+            margin-left: 25px;
+        }
+
+        .analysis {
+            background: rgba(46, 204, 113, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 5px solid #2ecc71;
+        }
+
+        .analysis h4 {
+            color: #2ecc71;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        /* Wall Construction Animation */
+        .wall-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(to bottom, #87CEEB 0%, #90EE90 70%, #8B7355 100%);
+            margin: 30px 0;
+            border: 3px solid #7f8c8d;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .wall-base {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 80px;
+            background: linear-gradient(to bottom, #95a5a6, #7f8c8d);
+            transition: width 2s ease-in-out;
+        }
+
+        .wall-section {
+            position: absolute;
+            bottom: 50px;
+            height: 80px;
+            background: linear-gradient(to bottom, #95a5a6, #7f8c8d);
+            border: 2px solid #34495e;
+            opacity: 0;
+        }
+
+        .turret {
+            position: absolute;
+            bottom: 50px;
+            width: 40px;
+            height: 120px;
+            background: linear-gradient(to bottom, #c0392b, #8b0000);
+            border: 2px solid #2c3e50;
+            opacity: 0;
+        }
+
+        .soldier {
+            position: absolute;
+            bottom: 130px;
+            width: 20px;
+            height: 40px;
+            background: #e74c3c;
+            opacity: 0;
+        }
+
+        .timeline-controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.4);
+        }
+
+        .btn:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .phase-indicator {
+            text-align: center;
+            font-size: 1.5em;
+            color: #f39c12;
+            margin: 20px 0;
+            min-height: 40px;
+        }
+
+        /* Map Styles */
+        .map-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .map-container img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .gallery-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            padding: 15px;
+            text-align: center;
+            font-size: 1em;
+        }
+
+        /* Navigation */
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(0,0,0,0.7);
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        .nav-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 0 5px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+
+        .slide-number {
+            display: inline-block;
+            margin: 0 15px;
+            font-size: 1.1em;
+            color: #ecf0f1;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Construction Timeline */
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 20px;
+            margin: 20px 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            border-left: 5px solid #e74c3c;
+            opacity: 0;
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.6s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.8s; }
+        .timeline-item:nth-child(5) { animation-delay: 1s; }
+
+        .timeline-date {
+            font-size: 1.5em;
+            color: #f39c12;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Impact sections */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .impact-card {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 10px;
+            border-top: 5px solid #e74c3c;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .impact-card h3 {
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Title -->
+    <div class="slide active" id="slide1">
+        <div class="slide-content">
+            <h1>HADRIAN'S WALL</h1>
+            <h2 style="text-align: center; color: #f39c12;">Construction, Purpose, and Legacy</h2>
+            <p style="text-align: center; font-size: 1.5em; margin-top: 50px;">
+                A study of Rome's most impressive frontier fortification through Latin sources and archaeological evidence
+            </p>
+            <div style="text-align: center; margin-top: 100px;">
+                <p style="font-size: 1.3em; color: #95a5a6;">122 AD - 128 AD</p>
+                <p style="font-size: 1.2em;">From Wallsend to Bowness-on-Solway</p>
+                <p style="font-size: 1.2em;">73 miles (117 km) across Northern Britain</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Introduction & Latin Source 1 -->
+    <div class="slide" id="slide2">
+        <div class="slide-content">
+            <h2>Latin Sources: The Wall's Purpose</h2>
+            
+            <div class="latin-quote">
+                <div class="latin-text">"Britanniam muro separavit, qui barbaros Romanosque divideret."</div>
+                <div class="translation">"He separated Britain with a wall, to divide the barbarians from the Romans."</div>
+                <div class="source">— Historia Augusta, Life of Hadrian 11.2</div>
+            </div>
+
+            <div class="guiding-questions">
+                <h4>Guiding Questions:</h4>
+                <ul>
+                    <li>What does this short line suggest was the purpose of Hadrian's Wall?</li>
+                    <li>How might this statement be propaganda rather than fact?</li>
+                    <li>How does archaeological evidence support or challenge this account?</li>
+                </ul>
+            </div>
+
+            <div class="analysis">
+                <h4>Detailed Analysis:</h4>
+                <p><strong>Word Choice: "barbaros"</strong></p>
+                <p>The use of <em>"barbaros"</em> (barbarians) reveals Roman bias and propaganda. This loaded term portrays the Britons as uncivilized outsiders, justifying Roman military presence. The word creates a clear "us vs. them" narrative—Romans as civilized, Britons as savage. This binary division oversimplifies the complex relationship between Romans and native Britons, many of whom served in Roman auxiliary forces and traded with the empire.</p>
+                <p><strong>Archaeological Reality:</strong> The wall had numerous gates (milecastles every Roman mile) suggesting it controlled movement rather than creating absolute separation—more about taxation and regulation than pure division.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Latin Source 2 -->
+    <div class="slide" id="slide3">
+        <div class="slide-content">
+            <h2>Hadrian's Policy Shift</h2>
+            
+            <div class="latin-quote">
+                <div class="latin-text">"Circumeunti provincias multa correxit, multa mutavit."</div>
+                <div class="translation">"While touring the provinces, he corrected many things and changed many things."</div>
+                <div class="source">— Cassius Dio, Roman History 69.9</div>
+            </div>
+
+            <div class="guiding-questions">
+                <h4>Guiding Questions:</h4>
+                <ul>
+                    <li>What does this tell us about Hadrian's approach to governing the empire?</li>
+                    <li>How does this relate to his decision to build a defensive wall?</li>
+                    <li>What does the word "correxit" (corrected) imply about previous policies?</li>
+                </ul>
+            </div>
+
+            <div class="analysis">
+                <h4>Analysis:</h4>
+                <p>The verbs <em>"correxit"</em> (corrected) and <em>"mutavit"</em> (changed) show Hadrian's hands-on approach and suggest previous policies were flawed. This contextualizes the wall: not expansion but consolidation. Hadrian abandoned his predecessor Trajan's conquests in the East, showing pragmatism over glory-seeking—a controversial move. The wall represents this defensive strategy, fixing the empire's northern boundary rather than endless conquest.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Latin Source 3 -->
+    <div class="slide" id="slide4">
+        <div class="slide-content">
+            <h2>Construction Evidence: The Builders</h2>
+            
+            <div class="latin-quote">
+                <div class="latin-text">"LEG II AVG FEC"</div>
+                <div class="translation">"The Second Augustan Legion made this."</div>
+                <div class="source">— Inscription found on wall stones (multiple examples)</div>
+            </div>
+
+            <div class="guiding-questions">
+                <h4>Guiding Questions:</h4>
+                <ul>
+                    <li>What does this inscription tell us about who built the wall?</li>
+                    <li>Why would legions inscribe their work?</li>
+                    <li>What does this reveal about Roman military organization?</li>
+                </ul>
+            </div>
+
+            <div class="analysis">
+                <h4>Analysis:</h4>
+                <p>These "centurial stones" mark sections built by specific legionary centuries, showing competition and pride in workmanship. Three legions built the wall: Legio II Augusta, Legio VI Victrix, and Legio XX Valeria Victrix. The abbreviation "FEC" (fecit - made) is a declaration of achievement. Roman soldiers weren't just fighters—they were engineers, surveyors, and builders. This multi-tasking capability made Rome's military unique and explains how they could undertake massive construction projects in remote frontiers.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Latin Source 4 -->
+    <div class="slide" id="slide5">
+        <div class="slide-content">
+            <h2>The Human Cost</h2>
+            
+            <div class="latin-quote">
+                <div class="latin-text">"D M ANNIVS DAVICVS MILITAVIT ANNOS XXV VIXIT ANNOS XLV"</div>
+                <div class="translation">"To the spirits of the departed. Annius Davicus, served 25 years, lived 45 years."</div>
+                <div class="source">— Tombstone inscription, Vindolanda</div>
+            </div>
+
+            <div class="guiding-questions">
+                <h4>Guiding Questions:</h4>
+                <ul>
+                    <li>What does this tombstone reveal about life on the frontier?</li>
+                    <li>What can we learn from the soldier's name and age?</li>
+                    <li>How does this personalize the history of the wall?</li>
+                </ul>
+            </div>
+
+            <div class="analysis">
+                <h4>Analysis:</h4>
+                <p>This tombstone humanizes the wall's story. The soldier's Celtic name (Davicus) suggests he was a local Briton serving Rome—many auxiliaries were recruited from conquered peoples. He spent his entire adult life (20-45) in military service on this harsh frontier. "D M" (Dis Manibus - to the spirits of the dead) shows Roman religious practices survived even in remote Britain. These inscriptions remind us that the wall wasn't just stone—it was built and manned by real people who lived, worked, and died there.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Latin Source 5 -->
+    <div class="slide" id="slide6">
+        <div class="slide-content">
+            <h2>Life at the Wall: The Vindolanda Tablets</h2>
+            
+            <div class="latin-quote">
+                <div class="latin-text">"Cetera mitto tibi... subligaria duo... tunicam... cervicellas duas"</div>
+                <div class="translation">"I send you other items... two pairs of underpants... a tunic... two pairs of socks"</div>
+                <div class="source">— Vindolanda Tablet 346</div>
+            </div>
+
+            <div class="guiding-questions">
+                <h4>Guiding Questions:</h4>
+                <ul>
+                    <li>What does this mundane letter reveal about conditions at the wall?</li>
+                    <li>How does this contrast with epic historical narratives?</li>
+                    <li>What can we learn about supply lines and daily life?</li>
+                </ul>
+            </div>
+
+            <div class="analysis">
+                <h4>Analysis:</h4>
+                <p>This remarkably preserved wooden tablet (waterlogged soil preserved thin wood slices) shows the unglamorous reality of frontier life. A soldier's family sends warm clothing—Northern Britain was brutally cold for Mediterranean troops. The word <em>"cetera"</em> (other things) suggests regular supply requests. These tablets (hundreds found at Vindolanda fort near the wall) include birthday party invitations, supply lists, and complaints—they're time capsules showing soldiers were homesick, cold, and worried about mundane things like everyone else. This contrasts sharply with propaganda's heroic narratives.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Additional Latin Source 6 (Student-Found) -->
+    <div class="slide" id="slide7">
+        <div class="slide-content">
+            <h2>Additional Research: Source 6</h2>
+            
+            <div class="latin-quote">
+                <div class="latin-text">"Exercitum per centuriones ac tribunos militares quam per legatos habebat disciplinae firmioris."</div>
+                <div class="translation">"He kept the army through centurions and military tribunes rather than through legates, as it was more firmly disciplined."</div>
+                <div class="source">— Historia Augusta, Life of Hadrian 10.2</div>
+            </div>
+
+            <div class="guiding-questions">
+                <h4>Guiding Questions (Student-Created):</h4>
+                <ul>
+                    <li>What does this reveal about Hadrian's management style for the wall project?</li>
+                    <li>How would this hands-on approach affect construction quality?</li>
+                    <li>Why would he trust junior officers over senior commanders?</li>
+                    <li>What does "disciplinae firmioris" suggest about his priorities?</li>
+                </ul>
+            </div>
+
+            <div class="analysis">
+                <h4>Detailed Analysis:</h4>
+                <p><strong>Phrase Analysis: "disciplinae firmioris"</strong></p>
+                <p>The genitive phrase <em>"disciplinae firmioris"</em> (of firmer discipline) is key to understanding the wall's construction. Hadrian's micromanagement ensured consistent standards across 73 miles. Using centurions (experienced sergeants) and tribunes rather than high-ranking legates meant practical builders, not aristocrats, led the work. This explains the wall's remarkable engineering consistency—same dimensions, regular spacing of milecastles and turrets. However, it also suggests Hadrian didn't trust the senatorial class, creating political tensions back in Rome.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Additional Latin Source 7 (Student-Found) -->
+    <div class="slide" id="slide8">
+        <div class="slide-content">
+            <h2>Additional Research: Source 7</h2>
+            
+            <div class="latin-quote">
+                <div class="latin-text">"Agrum publicum per omnes provincias aut occupatum a privatis aut vacua possessione interceptum recepit."</div>
+                <div class="translation">"Throughout all the provinces, he reclaimed public land that had been seized by private individuals or taken through vacant possession."</div>
+                <div class="source">— Historia Augusta, Life of Hadrian 11.4</div>
+            </div>
+
+            <div class="guiding-questions">
+                <h4>Guiding Questions (Student-Created):</h4>
+                <ul>
+                    <li>How does this relate to acquiring land for the wall?</li>
+                    <li>What does "occupatum a privatis" suggest about Roman-British land relations?</li>
+                    <li>How might this policy have affected local British landowners?</li>
+                    <li>Was this legal confiscation or theft from the British perspective?</li>
+                </ul>
+            </div>
+
+            <div class="analysis">
+                <h4>Detailed Analysis:</h4>
+                <p><strong>Phrase Analysis: "occupatum a privatis"</strong></p>
+                <p>The phrase <em>"occupatum a privatis"</em> (seized by private individuals) has sinister implications for Britain. From Rome's view, this reclaims "public" land. From Britons' perspective, this is confiscation of ancestral territory for the wall's construction. The wall required not just the footprint but a military zone stretching miles on either side. The passive verb "occupatum" (seized/occupied) ironically describes Roman actions—they're the real occupiers. British farms, villages, and sacred sites would have been destroyed for the wall, creating resentment that lasted generations.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Additional Latin Source 8 (Student-Found) -->
+    <div class="slide" id="slide9">
+        <div class="slide-content">
+            <h2>Additional Research: Source 8</h2>
+            
+            <div class="latin-quote">
+                <div class="latin-text">"Britanni tolerare ultra nequirent Romanorum iniurias."</div>
+                <div class="translation">"The Britons could no longer endure the injustices of the Romans."</div>
+                <div class="source">— Cassius Dio, Roman History 62.1 (context: earlier revolt, but relevant to frontier tensions)</div>
+            </div>
+
+            <div class="guiding-questions">
+                <h4>Guiding Questions (Student-Created):</h4>
+                <ul>
+                    <li>Though written about an earlier revolt, how does this apply to the wall period?</li>
+                    <li>What does "iniurias" (injustices) specifically refer to?</li>
+                    <li>How might the wall itself have been seen as an "iniuria" by Britons?</li>
+                    <li>What evidence do we have of British resistance to the wall?</li>
+                </ul>
+            </div>
+
+            <div class="analysis">
+                <h4>Detailed Analysis:</h4>
+                <p><strong>Phrase Analysis: "tolerare ultra nequirent"</strong></p>
+                <p>The phrase <em>"tolerare ultra nequirent"</em> (could no longer endure) captures the breaking point of oppression. While Dio writes about Boudicca's earlier revolt (60-61 AD), similar tensions existed during wall construction. <em>"Iniurias"</em> (injustices/outrages) is a loaded word—it includes taxation, land seizure, forced labor, and cultural suppression. The wall required thousands of workers; did Britons provide forced labor? Archaeological evidence shows northern tribes were displaced, villages abandoned. The wall literally divided families and disrupted trade routes—a massive "iniuria" that reshaped British life permanently.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Construction Animation Introduction -->
+    <div class="slide" id="slide10">
+        <div class="slide-content">
+            <h2>Construction Timeline: How the Wall Was Built</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">122 AD - Planning Phase</div>
+                    <p>Emperor Hadrian visits Britain and orders construction. Surveyors map the route from coast to coast, choosing strategic high ground. Original plan: 10 Roman feet (3m) wide stone wall.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">122-124 AD - Phase 1: Eastern Section</div>
+                    <p>Three legions begin construction simultaneously. Eastern section (Newcastle to River Irthing) built in stone to full width. Milecastles (small forts) placed every Roman mile. Two turrets between each milecastle for observation.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">124-126 AD - Phase 2: Western Section & Plan Change</div>
+                    <p>Western section initially built in turf (faster, softer ground). <strong>Major revision:</strong> Wall width reduced to 6-8 feet to speed construction. Already-built sections kept at original width, creating the "Broad Wall" and "Narrow Wall" visible today.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">126-128 AD - Phase 3: Forts & Vallum</div>
+                    <p>16 large forts added <em>directly onto</em> the wall (original plan had them behind). Vallum (large ditch system) dug south of wall to mark military zone. Turf sections gradually replaced with stone.</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">128-138 AD - Completion & Modifications</div>
+                    <p>Final touches: plastering, painting, milestones. The wall was whitewashed to make it visible for miles—a show of Roman power. Continued modifications throughout Roman occupation (another 300 years!).</p>
+                </div>
+            </div>
+
+            <p style="text-align: center; margin-top: 40px; font-size: 1.3em; color: #f39c12;">
+                Next: Interactive animation showing construction phases
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 11: Interactive Construction Animation -->
+    <div class="slide" id="slide11">
+        <div class="slide-content">
+            <h2>Interactive: Watch the Wall Being Built</h2>
+            <p style="text-align: center; font-size: 1.2em;">Click the buttons to simulate the construction phases</p>
+            
+            <div class="phase-indicator" id="phaseText">Ready to begin construction...</div>
+            
+            <div class="wall-container" id="wallAnimation">
+                <!-- Animation elements will be added by JavaScript -->
+            </div>
+            
+            <div class="timeline-controls">
+                <button class="btn" id="phase1Btn">Phase 1: Foundation (122-124 AD)</button>
+                <button class="btn" id="phase2Btn">Phase 2: Stone Walls (124-126 AD)</button>
+                <button class="btn" id="phase3Btn">Phase 3: Turrets (126-128 AD)</button>
+                <button class="btn" id="phase4Btn">Phase 4: Forts (128 AD)</button>
+                <button class="btn" id="resetBtn">Reset Animation</button>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                <h3>Construction Facts:</h3>
+                <ul>
+                    <li><strong>Length:</strong> 73 miles (117 km) - coast to coast</li>
+                    <li><strong>Height:</strong> 15-20 feet (4.5-6 m) depending on location</li>
+                    <li><strong>Width:</strong> Originally 10 feet, reduced to 6-8 feet</li>
+                    <li><strong>Milecastles:</strong> 80 small forts, one every Roman mile</li>
+                    <li><strong>Turrets:</strong> 160 observation towers, two between each milecastle</li>
+                    <li><strong>Major Forts:</strong> 16 large garrison forts holding 500-1000 troops each</li>
+                    <li><strong>Workforce:</strong> ~15,000 soldiers from three legions</li>
+                    <li><strong>Construction Time:</strong> 6-8 years for initial completion</li>
+                    <li><strong>Materials:</strong> ~1.5 million cubic meters of stone</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Map of the Wall -->
+    <div class="slide" id="slide12">
+        <div class="slide-content">
+            <h2>Location: Coast to Coast Across Northern Britain</h2>
+            
+            <div class="map-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Hadrians_Wall_map.svg" 
+                     alt="Historical map of Hadrian's Wall and the Antonine Wall" 
+                     style="width: 100%; border-radius: 5px;">
+                <p style="text-align: center; color: #95a5a6; margin-top: 15px; font-size: 0.9em;">
+                    <em>Map showing Hadrian's Wall (begun 122 AD) and the later Antonine Wall (begun 142 AD). 
+                    Source: <a href="https://upload.wikimedia.org/wikipedia/commons/c/ce/Hadrians_Wall_map.svg" 
+                    target="_blank" style="color: #3498db; text-decoration: none;">Wikimedia Commons</a></em>
+                </p>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h3>Understanding the Map:</h3>
+                <p>This map shows both Hadrian's Wall (lower, red line - begun 122 AD) and the Antonine Wall (upper line - begun 142 AD). Emperor Antoninus Pius, Hadrian's successor, tried to push the frontier north into Scotland by building a second wall. However, the Antonine Wall was abandoned after only 20 years, proving Hadrian's original boundary was the right strategic choice. The Romans permanently retreated to Hadrian's Wall, which remained the frontier for the next 250+ years.</p>
+                
+                <h3 style="margin-top: 25px;">Key Locations Along Hadrian's Wall:</h3>
+                <ul>
+                    <li><strong>Wallsend (Segedunum):</strong> Eastern terminus, "end of the wall" on the North Sea</li>
+                    <li><strong>Newcastle (Pons Aelius):</strong> Major bridge crossing the River Tyne</li>
+                    <li><strong>Chesters (Cilurnum):</strong> Cavalry fort with famous bathhouse</li>
+                    <li><strong>Housesteads (Vercovicium):</strong> Best-preserved fort, perched on cliff edge</li>
+                    <li><strong>Vindolanda:</strong> Just south of wall, famous for wooden tablets</li>
+                    <li><strong>Birdoswald (Banna):</strong> Western fort on dramatic escarpment</li>
+                    <li><strong>Bowness-on-Solway:</strong> Western terminus on the Solway Firth (Irish Sea)</li>
+                </ul>
+                
+                <p style="margin-top: 20px; padding: 15px; background: rgba(231, 76, 60, 0.2); border-radius: 5px; border-left: 5px solid #e74c3c;">
+                    <strong>Scale:</strong> The wall stretched 73 miles (117 km) from the North Sea to the Irish Sea at Britain's narrowest point—a strategic choice that minimized construction distance while maximizing defensive coverage.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 13: The Wall Today - Photo Gallery -->
+    <div class="slide" id="slide13">
+        <div class="slide-content">
+            <h2>The Wall Today: Archaeological Remains</h2>
+            
+            <div class="image-gallery">
+                <div class="gallery-item">
+                    <div style="background: linear-gradient(135deg, #2c3e50, #34495e); height: 250px; display: flex; align-items: center; justify-content: center; color: #ecf0f1; font-size: 1.2em; text-align: center; padding: 20px;">
+                        <div>
+                            <p style="font-size: 3em;">🏛️</p>
+                            <p><strong>Housesteads Fort</strong></p>
+                            <p style="font-size: 0.9em;">Most complete Roman fort in Britain</p>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">
+                        Housesteads: Barracks, granaries, and headquarters building still visible. Dramatic hilltop location showing strategic positioning.
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div style="background: linear-gradient(135deg, #95a5a6, #7f8c8d); height: 250px; display: flex; align-items: center; justify-content: center; color: #2c3e50; font-size: 1.2em; text-align: center; padding: 20px;">
+                        <div>
+                            <p style="font-size: 3em;">🧱</p>
+                            <p><strong>Wall at Steel Rigg</strong></p>
+                            <p style="font-size: 0.9em;">Best-preserved section</p>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">
+                        Steel Rigg: Wall snakes along dramatic cliff edges. You can see original Roman stones and the wall's impressive height (up to 15 feet here).
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); height: 250px; display: flex; align-items: center; justify-content: center; color: #ecf0f1; font-size: 1.2em; text-align: center; padding: 20px;">
+                        <div>
+                            <p style="font-size: 3em;">🗼</p>
+                            <p><strong>Turret Remains</strong></p>
+                            <p style="font-size: 0.9em;">Observation towers every 1/3 mile</p>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">
+                        Turret foundations visible at multiple sites. These small towers held 4-8 soldiers for surveillance and signaling between milecastles.
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div style="background: linear-gradient(135deg, #3498db, #2980b9); height: 250px; display: flex; align-items: center; justify-content: center; color: #ecf0f1; font-size: 1.2em; text-align: center; padding: 20px;">
+                        <div>
+                            <p style="font-size: 3em;">🛁</p>
+                            <p><strong>Chesters Bathhouse</strong></p>
+                            <p style="font-size: 0.9em;">Military bathhouse ruins</p>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">
+                        Chesters: Remarkably preserved bathhouse showing Roman engineering. Hypocaust (underfloor heating) system still visible.
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div style="background: linear-gradient(135deg, #f39c12, #e67e22); height: 250px; display: flex; align-items: center; justify-content: center; color: #2c3e50; font-size: 1.2em; text-align: center; padding: 20px;">
+                        <div>
+                            <p style="font-size: 3em;">📜</p>
+                            <p><strong>Vindolanda Tablets</strong></p>
+                            <p style="font-size: 0.9em;">Wooden writing tablets</p>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">
+                        Vindolanda: Hundreds of thin wooden tablets with ink writing preserved in waterlogged soil. Personal letters, supply lists, military reports from daily life.
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <div style="background: linear-gradient(135deg, #2ecc71, #27ae60); height: 250px; display: flex; align-items: center; justify-content: center; color: #ecf0f1; font-size: 1.2em; text-align: center; padding: 20px;">
+                        <div>
+                            <p style="font-size: 3em;">🏰</p>
+                            <p><strong>Milecastle 37</strong></p>
+                            <p style="font-size: 0.9em;">Small fort foundations</p>
+                        </div>
+                    </div>
+                    <div class="gallery-caption">
+                        Milecastle foundations show gates on both sides of wall—soldiers could patrol both directions. Held 20-30 troops for local patrol and gate control.
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; padding: 25px; background: rgba(230, 126, 34, 0.2); border-radius: 10px; border-left: 5px solid #e67e22;">
+                <h3 style="color: #e67e22;">UNESCO World Heritage Site (1987)</h3>
+                <p>Hadrian's Wall is a UNESCO World Heritage Site, recognized as one of the most important Roman monuments in existence. It's part of the "Frontiers of the Roman Empire" World Heritage Site, which also includes the Antonine Wall in Scotland and the German Limes.</p>
+                <p><strong>Visiting Today:</strong> You can walk the Hadrian's Wall Path, an 84-mile National Trail following the wall from coast to coast. Millions visit annually to see this tangible connection to Rome's empire.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 14: Archaeological Evidence vs. Latin Sources -->
+    <div class="slide" id="slide14">
+        <div class="slide-content">
+            <h2>What Does Archaeology Confirm or Contradict?</h2>
+
+            <div class="impact-grid">
+                <div class="impact-card" style="border-top-color: #2ecc71;">
+                    <h3 style="color: #2ecc71;">✓ Confirmed by Archaeology</h3>
+                    <ul>
+                        <li><strong>Construction by legions:</strong> Centurial stones confirm three legions built it</li>
+                        <li><strong>Scale and extent:</strong> Wall really does run 73 miles coast-to-coast</li>
+                        <li><strong>Construction changes:</strong> Physical evidence shows "Broad Wall" vs. "Narrow Wall" - plan changed mid-build</li>
+                        <li><strong>Military presence:</strong> Forts, armor, weapons confirm major garrison</li>
+                        <li><strong>Timeline:</strong> Coins and pottery date construction to 122-130 AD, matching written sources</li>
+                    </ul>
+                </div>
+
+                <div class="impact-card" style="border-top-color: #e74c3c;">
+                    <h3 style="color: #e74c3c;">✗ Contradicted or Complicated</h3>
+                    <ul>
+                        <li><strong>"Barbaros Romanosque divideret":</strong> Gates every mile suggest controlled passage, not absolute division</li>
+                        <li><strong>Simple barrier concept:</strong> Complex system included forward ditches, rear vallum, signaling - sophisticated zone, not just "wall"</li>
+                        <li><strong>Pure separation:</strong> Civilian settlements (vici) grew outside forts - Romans and Britons lived together, traded, intermarried</li>
+                        <li><strong>Purely defensive:</strong> Wall is 15 feet high - impressive but easily bypassed. More about control and display than military defense</li>
+                        <li><strong>Completed quickly:</strong> Archaeology shows continued modifications for 300+ years</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; padding: 25px; background: rgba(52, 152, 219, 0.2); border-radius: 10px; border-left: 5px solid #3498db;">
+                <h3 style="color: #3498db;">Source Reliability Assessment</h3>
+                <p><strong>Bias:</strong> Roman sources emphasize imperial glory and "civilizing mission." They portray Britons as barbarians needing control, ignoring complex native societies.</p>
+                <p><strong>Exaggeration:</strong> The Historia Augusta (source of "barbaros" quote) was written 200 years after Hadrian, mixing fact and fiction. It's notoriously unreliable—possible propaganda even centuries later.</p>
+                <p><strong>Incompleteness:</strong> Latin sources don't mention plan changes during construction (archaeology reveals this). They ignore the wall's economic function (customs/taxation). They're silent on forced labor or displacement of locals.</p>
+                <p><strong>Missing voices:</strong> We have NO written sources from Britons themselves about the wall. The conquered people's perspective is completely absent from literature—archaeology is our only window into their experience.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 15: Impact on Romans and Britons -->
+    <div class="slide" id="slide15">
+        <div class="slide-content">
+            <h2>Impact on Both Romans and Britons</h2>
+
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <h3>Impact on Romans 🏛️</h3>
+                    <ul>
+                        <li><strong>Military deployment:</strong> 10,000+ troops permanently stationed at wall - massive resource commitment</li>
+                        <li><strong>Economic drain:</strong> Construction and maintenance cost enormous sums; Britain never profitable enough to justify expense</li>
+                        <li><strong>Cultural isolation:</strong> Soldiers from Mediterranean spent entire careers in cold, remote Britain - Vindolanda tablets show homesickness</li>
+                        <li><strong>Political statement:</strong> Shift from expansion to defense - controversial in Rome, seen as abandoning conquest glory</li>
+                        <li><strong>Engineering achievement:</strong> Demonstrated Roman technical superiority, propaganda value throughout empire</li>
+                        <li><strong>Social mixing:</strong> Soldiers married local women, had children - created Romano-British hybrid culture</li>
+                    </ul>
+                </div>
+
+                <div class="impact-card">
+                    <h3>Impact on Britons 🛡️</h3>
+                    <ul>
+                        <li><strong>Land seizure:</strong> Thousands of acres confiscated for wall and military zone - farms and villages destroyed</li>
+                        <li><strong>Forced labor:</strong> Likely conscripted local labor for construction (sources silent, but Rome's standard practice)</li>
+                        <li><strong>Tribal division:</strong> Wall split northern tribes from southern, disrupting trade routes and family connections</li>
+                        <li><strong>Economic exploitation:</strong> Wall functioned as customs barrier - taxation on movement and trade</li>
+                        <li><strong>Cultural suppression:</strong> Roman religion, language, law imposed; traditional ways marginalized</li>
+                        <li><strong>New opportunities:</strong> Some Britons prospered - joining auxiliary units, trading with forts, learning Roman skills</li>
+                        <li><strong>Long-term trauma:</strong> Physical barrier created lasting north-south divide in British identity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; padding: 25px; background: rgba(155, 89, 182, 0.2); border-radius: 10px; border-left: 5px solid #9b59b6;">
+                <h3 style="color: #9b59b6;">The Complex Reality: Not Simply Oppressor vs. Oppressed</h3>
+                <p>The wall's impact wasn't purely negative for Britons or positive for Romans. It created:</p>
+                <ul>
+                    <li><strong>Economic hubs:</strong> Forts became market towns where Romans and Britons traded, creating hybrid economies</li>
+                    <li><strong>Cultural exchange:</strong> Britons adopted Roman technology (buildings, roads, writing); Romans adopted local foods, crafts, religious practices</li>
+                    <li><strong>Social mobility:</strong> British auxiliary soldiers gained Roman citizenship after 25 years service - rare opportunity for conquered peoples</li>
+                    <li><strong>Technological transfer:</strong> Roman engineering, agriculture, medicine improved living standards for some Britons</li>
+                    <li><strong>BUT:</strong> This came at cost of independence, land, and cultural autonomy - a colonial relationship built on unequal power</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 16: Long-term Legacy -->
+    <div class="slide" id="slide16">
+        <div class="slide-content">
+            <h2>The Long-Term Legacy in Britain</h2>
+
+            <h3>Immediate Post-Roman Era (410-600 AD)</h3>
+            <ul>
+                <li>After Roman withdrawal (410 AD), locals continued using forts as settlements</li>
+                <li>Wall's stones robbed for building material (churches, castles, farms built from Roman stones)</li>
+                <li>Military function ended, but physical barrier remained psychological and practical boundary</li>
+            </ul>
+
+            <h3>Medieval Period (600-1500 AD)</h3>
+            <ul>
+                <li>Wall marked England-Scotland border disputes for centuries</li>
+                <li>Castles built near wall (Carlisle Castle) used Roman foundations</li>
+                <li>Local name "Picts' Wall" or "Devil's Wall" - memory of Roman origin faded into legend</li>
+                <li>Extensive stone quarrying destroyed large sections</li>
+            </ul>
+
+            <h3>Modern Rediscovery (1700s-Present)</h3>
+            <ul>
+                <li><strong>18th century:</strong> Antiquarians began studying remains, identifying it as Roman</li>
+                <li><strong>1830s-1890s:</strong> First archaeological excavations at major sites</li>
+                <li><strong>1987:</strong> Designated UNESCO World Heritage Site</li>
+                <li><strong>Today:</strong> Major tourist attraction (millions visit annually), symbol of British identity</li>
+            </ul>
+
+            <div style="margin-top: 40px;">
+                <h3 style="color: #f39c12;">Lasting Impacts on Britain:</h3>
+                
+                <div class="timeline-item">
+                    <strong>1. Geographic Divide:</strong>
+                    <p>The wall created a lasting north-south divide. Even today, the area around the wall marks cultural and linguistic boundaries. Scottish-English distinctions partly follow this ancient Roman frontier.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>2. Infrastructure:</strong>
+                    <p>Roman roads connecting wall forts became major medieval highways. Modern roads (A69, B6318) follow Roman routes. Towns grew where Roman forts stood (Carlisle, Newcastle, Corbridge).</p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>3. Language:</strong>
+                    <p>Latin words entered British languages, especially place names. "-chester" and "-caster" (from Latin "castra" = fort) appear in cities near the wall: Newcastle, Manchester, Lancaster, Doncaster.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>4. Cultural Memory:</strong>
+                    <p>The wall became symbol of Britain's Roman past, connection to "classical civilization." Victorian Britain especially embraced this heritage, seeing themselves as Rome's successors—justifying their own empire-building.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <strong>5. Modern Tourism & Identity:</strong>
+                    <p>Today, Hadrian's Wall is Northern England's top tourist attraction, bringing £20+ million annually. It's a source of regional pride and identity. The Hadrian's Wall Path walking trail (opened 2003) lets visitors experience the entire 84-mile frontier.</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 40px; padding: 25px; background: rgba(231, 76, 60, 0.2); border-radius: 10px; border-left: 5px solid #e74c3c;">
+                <h3 style="color: #e74c3c;">The Wall in Popular Culture</h3>
+                <p>Hadrian's Wall has inspired countless books, films, and TV shows. Most famously, George R.R. Martin cited it as inspiration for "The Wall" in <em>Game of Thrones</em>—both are northern barriers against "barbarians," though Martin's is much larger and magical!</p>
+                <p>This cultural legacy shows the wall's power as a symbol: boundaries between civilization and wilderness, known and unknown, "us" and "them." These themes resonate across 2000 years.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 17: Conclusion -->
+    <div class="slide" id="slide17">
+        <div class="slide-content">
+            <h2>Conclusion: Hadrian's Wall Through Latin and Archaeology</h2>
+
+            <div style="margin-top: 30px;">
+                <h3 style="color: #f39c12;">Key Findings:</h3>
+
+                <div class="latin-quote" style="background: rgba(46, 204, 113, 0.2); border-left-color: #2ecc71;">
+                    <h4 style="color: #2ecc71;">1. Latin Sources Tell Us:</h4>
+                    <ul>
+                        <li>Hadrian built the wall to "separate barbarians from Romans" (propaganda-laden language)</li>
+                        <li>Three legions constructed it under tight discipline (confirmed by centurial stones)</li>
+                        <li>Daily life was harsh, cold, mundane (Vindolanda tablets show human side)</li>
+                        <li>Construction involved land seizure and displacement of locals</li>
+                        <li>Wall represented policy shift from expansion to consolidation</li>
+                    </ul>
+                </div>
+
+                <div class="latin-quote" style="background: rgba(52, 152, 219, 0.2); border-left-color: #3498db;">
+                    <h4 style="color: #3498db;">2. Source Reliability Issues:</h4>
+                    <ul>
+                        <li><strong>Bias:</strong> All sources are Roman—we have NO British perspective</li>
+                        <li><strong>Propaganda:</strong> "Barbarian" language justified occupation and exploitation</li>
+                        <li><strong>Incomplete:</strong> Sources omit construction changes, forced labor, economic functions</li>
+                        <li><strong>Delayed writing:</strong> Historia Augusta written 200+ years after events</li>
+                    </ul>
+                </div>
+
+                <div class="latin-quote" style="background: rgba(155, 89, 182, 0.2); border-left-color: #9b59b6;">
+                    <h4 style="color: #9b59b6;">3. Archaeology Reveals:</h4>
+                    <ul>
+                        <li>Wall was complex zone (ditches, turrets, forts, vallum), not simple barrier</li>
+                        <li>Plan changed mid-construction (Broad Wall vs. Narrow Wall)</li>
+                        <li>Gates every mile suggest control of movement, not absolute separation</li>
+                        <li>Mixed Romano-British settlements show cultural blending</li>
+                        <li>Modifications continued for 300 years—never truly "finished"</li>
+                    </ul>
+                </div>
+
+                <div class="latin-quote" style="background: rgba(230, 126, 34, 0.2); border-left-color: #e67e22;">
+                    <h4 style="color: #e67e22;">4. Impact on Romans & Britons:</h4>
+                    <ul>
+                        <li><strong>Romans:</strong> Massive resource drain, but demonstration of power and engineering prowess</li>
+                        <li><strong>Britons:</strong> Land loss, forced labor, cultural suppression, but also new economic opportunities</li>
+                        <li>Created lasting geographic and cultural divide in Britain</li>
+                        <li>Not simple oppressor/oppressed—complex colonial relationship with cultural exchange</li>
+                    </ul>
+                </div>
+
+                <div class="latin-quote">
+                    <h4 style="color: #e74c3c;">5. Lasting Legacy:</h4>
+                    <ul>
+                        <li>Physical remains still visible after 1900 years (UNESCO World Heritage Site)</li>
+                        <li>Created geographic division that persists in England-Scotland identity</li>
+                        <li>Place names, roads, towns still follow Roman patterns</li>
+                        <li>Symbol of Roman Britain, inspiring art, literature, tourism</li>
+                        <li>Teaches lessons about imperialism, borders, cultural identity</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 50px; padding: 30px; background: rgba(231, 76, 60, 0.3); border: 3px solid #e74c3c; border-radius: 10px; text-align: center;">
+                <h3 style="font-size: 2em; color: #f39c12;">Final Reflection:</h3>
+                <p style="font-size: 1.3em; line-height: 1.8;">
+                    Hadrian's Wall demonstrates the power and limits of Latin sources. While they give us the Roman perspective—invaluable for understanding imperial policy and military organization—they completely silence the British experience. Only by combining biased texts with objective archaeology can we approach the full truth: a complex story of empire, engineering, exploitation, and cultural collision that shaped Britain forever.
+                </p>
+                <p style="font-size: 1.2em; margin-top: 20px; font-style: italic; color: #ecf0f1;">
+                    "History is written by the victors, but archaeology gives voice to the silenced."
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn">← Previous</button>
+        <span class="slide-number" id="slideNumber">1 / 17</span>
+        <button class="nav-btn" id="nextBtn">Next →</button>
+    </div>
+
+    <script>
+        // Slide navigation
+        let currentSlide = 1;
+        const totalSlides = 17;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            if (n > totalSlides) currentSlide = totalSlides;
+            if (n < 1) currentSlide = 1;
+            
+            slides[currentSlide - 1].classList.add('active');
+            document.getElementById('slideNumber').textContent = `${currentSlide} / ${totalSlides}`;
+            
+            // Reset animation if on animation slide
+            if (currentSlide === 11) {
+                resetAnimation();
+            }
+        }
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            currentSlide--;
+            showSlide(currentSlide);
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            currentSlide++;
+            showSlide(currentSlide);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                currentSlide--;
+                showSlide(currentSlide);
+            } else if (e.key === 'ArrowRight') {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Wall construction animation
+        let animationPhase = 0;
+
+        function resetAnimation() {
+            animationPhase = 0;
+            const container = document.getElementById('wallAnimation');
+            container.innerHTML = '';
+            document.getElementById('phaseText').textContent = 'Ready to begin construction...';
+        }
+
+        function animatePhase1() {
+            if (animationPhase >= 1) return;
+            animationPhase = 1;
+            document.getElementById('phaseText').textContent = 'Phase 1 (122-124 AD): Foundation and surveying. Soldiers clear land and lay foundation stones.';
+            
+            const container = document.getElementById('wallAnimation');
+            container.innerHTML = '';
+            
+            // Create foundation sections appearing from left to right
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const section = document.createElement('div');
+                    section.className = 'wall-section';
+                    section.style.left = (10 + i * 80) + 'px';
+                    section.style.width = '70px';
+                    section.style.height = '20px';
+                    section.style.background = '#8B7355';
+                    container.appendChild(section);
+                    
+                    setTimeout(() => {
+                        section.style.opacity = '1';
+                    }, 50);
+                }, i * 200);
+            }
+        }
+
+        function animatePhase2() {
+            if (animationPhase >= 2) return;
+            if (animationPhase < 1) animatePhase1();
+            animationPhase = 2;
+            document.getElementById('phaseText').textContent = 'Phase 2 (124-126 AD): Stone wall construction. Eastern section built in stone, western in turf (faster).';
+            
+            setTimeout(() => {
+                const container = document.getElementById('wallAnimation');
+                
+                // Build wall sections upward
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        const section = document.createElement('div');
+                        section.className = 'wall-section';
+                        section.style.left = (10 + i * 80) + 'px';
+                        section.style.width = '70px';
+                        section.style.height = '80px';
+                        section.style.background = 'linear-gradient(to bottom, #95a5a6, #7f8c8d)';
+                        container.appendChild(section);
+                        
+                        setTimeout(() => {
+                            section.style.opacity = '1';
+                        }, 50);
+                    }, i * 250);
+                }
+            }, 500);
+        }
+
+        function animatePhase3() {
+            if (animationPhase >= 3) return;
+            if (animationPhase < 2) animatePhase2();
+            animationPhase = 3;
+            document.getElementById('phaseText').textContent = 'Phase 3 (126-128 AD): Turrets added. Two observation towers between each milecastle for surveillance.';
+            
+            setTimeout(() => {
+                const container = document.getElementById('wallAnimation');
+                
+                // Add turrets
+                const turretPositions = [150, 350, 550, 750];
+                turretPositions.forEach((pos, i) => {
+                    setTimeout(() => {
+                        const turret = document.createElement('div');
+                        turret.className = 'turret';
+                        turret.style.left = pos + 'px';
+                        container.appendChild(turret);
+                        
+                        setTimeout(() => {
+                            turret.style.opacity = '1';
+                        }, 50);
+                    }, i * 400);
+                });
+            }, 2000);
+        }
+
+        function animatePhase4() {
+            if (animationPhase >= 4) return;
+            if (animationPhase < 3) animatePhase3();
+            animationPhase = 4;
+            document.getElementById('phaseText').textContent = 'Phase 4 (128 AD): Major forts integrated INTO the wall. Gates, barracks, and command centers built.';
+            
+            setTimeout(() => {
+                const container = document.getElementById('wallAnimation');
+                
+                // Add larger fort structures
+                const fortPositions = [250, 600];
+                fortPositions.forEach((pos, i) => {
+                    setTimeout(() => {
+                        const fort = document.createElement('div');
+                        fort.style.position = 'absolute';
+                        fort.style.bottom = '50px';
+                        fort.style.left = pos + 'px';
+                        fort.style.width = '100px';
+                        fort.style.height = '100px';
+                        fort.style.background = 'linear-gradient(to bottom, #e74c3c, #c0392b)';
+                        fort.style.border = '3px solid #2c3e50';
+                        fort.style.opacity = '0';
+                        container.appendChild(fort);
+                        
+                        setTimeout(() => {
+                            fort.style.opacity = '1';
+                            fort.style.transition = 'opacity 0.5s ease';
+                        }, 50);
+
+                        // Add soldiers
+                        for (let j = 0; j < 3; j++) {
+                            setTimeout(() => {
+                                const soldier = document.createElement('div');
+                                soldier.className = 'soldier';
+                                soldier.style.left = (pos + 20 + j * 25) + 'px';
+                                container.appendChild(soldier);
+                                
+                                setTimeout(() => {
+                                    soldier.style.opacity = '1';
+                                    soldier.style.transition = 'opacity 0.3s ease';
+                                }, 50);
+                            }, j * 200);
+                        }
+                    }, i * 800);
+                });
+            }, 2500);
+        }
+
+        // Animation button listeners
+        document.getElementById('phase1Btn').addEventListener('click', animatePhase1);
+        document.getElementById('phase2Btn').addEventListener('click', animatePhase2);
+        document.getElementById('phase3Btn').addEventListener('click', animatePhase3);
+        document.getElementById('phase4Btn').addEventListener('click', animatePhase4);
+        document.getElementById('resetBtn').addEventListener('click', resetAnimation);
+
+        // Initialize
+        showSlide(1);
+    </script>
+</body>
+</html>
