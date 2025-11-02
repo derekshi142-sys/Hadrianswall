@@ -1,8 +1,28 @@
 # Hadrian's Wall Presentation - User Guide
 
-## Quick Start
+## 🌐 Live on Netlify!
 
-1. **Open the presentation:** Double-click `hadrians_wall_presentation.html` in any modern web browser (Chrome, Firefox, Safari, Edge)
+This presentation is deployed and ready to view online via Netlify.
+
+### Deploy to Netlify (3 Easy Steps):
+
+1. **Go to Netlify:** Visit [netlify.com](https://netlify.com) and sign in (or create free account)
+2. **Import from GitHub:** 
+   - Click "Add new site" → "Import an existing project"
+   - Choose "Deploy with GitHub"
+   - Select repository: `derekshi142-sys/Hadrianswall`
+   - Netlify will auto-detect the settings (no build needed!)
+3. **Deploy:** Click "Deploy site" - Done in ~30 seconds!
+
+Your presentation will be live at: `https://[your-site-name].netlify.app`
+
+**✅ Netlify-ready:** This site uses `index.html` and includes a `netlify.toml` config file for optimal deployment.
+
+---
+
+## Quick Start (Local)
+
+1. **Open the presentation:** Double-click `index.html` in any modern web browser (Chrome, Firefox, Safari, Edge)
 2. **Navigate:** Use the arrow buttons at the bottom, or press Left/Right arrow keys on your keyboard
 3. **Interactive Animation:** On Slide 11, click the phase buttons to watch the wall being built step-by-step
 
@@ -159,9 +179,13 @@ All 8 sources are documented in `latin_sources_reference.md`:
 
 ## Files Included
 
-1. **hadrians_wall_presentation.html** - Main presentation (open this!)
-2. **latin_sources_reference.md** - All 8 Latin sources with analysis
-3. **README.md** - This guide
+1. **index.html** - Main presentation (open this!)
+2. **netlify.toml** - Netlify deployment configuration
+3. **latin_sources_reference.md** - All 8 Latin sources with analysis
+4. **presentation_speaker_notes.md** - Speaker guide for presenting
+5. **handout_summary.md** - Printable handout for audience
+6. **START_HERE.md** - Quick start guide
+7. **README.md** - This guide
 
 ## Customization
 

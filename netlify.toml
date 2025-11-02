@@ -1,0 +1,28 @@
+# Netlify configuration for Hadrian's Wall Presentation
+
+[build]
+  # No build command needed - this is a static HTML site
+  publish = "."
+  
+[build.environment]
+  # No environment variables needed
+
+[[headers]]
+  # Apply these headers to all routes
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "SAMEORIGIN"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    
+    # Cache control for HTML
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[redirects]]
+  # Redirect any path to index.html (ensures direct linking works)
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+

@@ -3,7 +3,7 @@
 ## Quick Start (3 Steps)
 
 ### Step 1: Open the Presentation
-**Double-click this file:** `hadrians_wall_presentation.html`
+**Double-click this file:** `index.html` (formerly `hadrians_wall_presentation.html`)
 
 It will open in your web browser (Chrome, Firefox, Safari, Edge - any modern browser works!)
 
@@ -27,7 +27,7 @@ Watch the wall being built step by step!
 
 You have **5 files** in this folder:
 
-### 1. **hadrians_wall_presentation.html** ⭐ MAIN FILE
+### 1. **index.html** ⭐ MAIN FILE (Netlify-ready)
    - The full animated presentation
    - 17 slides covering all 5 required questions
    - Interactive construction animation
@@ -251,7 +251,8 @@ Does your presentation include:
 
 ## 🎬 Now Go Present!
 
-**Double-click `hadrians_wall_presentation.html` to begin!**
+**Double-click `index.html` to begin!**
+**Or visit your Netlify site:** https://hadrianswall.netlify.app (once deployed)
 
 You've researched thoroughly, analyzed critically, and created professional-quality materials. You're going to do great!
 
